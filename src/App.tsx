@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import './App.scss';
 import { GoodsList } from './GoodsList';
 
@@ -9,7 +9,7 @@ export const App: React.FC = () => {
   const [goods, setGoods] = useState<Good[]>([]);
   const [messageError, setMessageError] = useState<string>('');
 
-  const loadData = async (fetcher: () => Promise<Good[]>) => {
+  const loadData = useCallback(async (fetcher: () => Promise<Good[]>) => {
     try {
       const data = await fetcher();
 
@@ -19,7 +19,7 @@ export const App: React.FC = () => {
       setMessageError((err as Error).message);
       setGoods([]);
     }
-  };
+  }, []);
 
   return (
     <div className="App">
